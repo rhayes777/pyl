@@ -3,6 +3,7 @@ from pathlib import Path
 import pytest
 
 from pylm.module import Module
+from pylm.module_updater import ModuleUpdater
 
 
 @pytest.fixture
@@ -23,8 +24,23 @@ def example_target(example_path):
     target = Path(__file__).parent / "example.py"
     shutil.copy(example_path, target)
     yield target
-    shutil.rmtree(target)
+    target.unlink()
 
 
-def test_module_updater(target):
-    shutil
+def test_module_updater(example_target):
+    updater = ModuleUpdater(example_target)
+    updater["function"] = "def function():\n    pass"
+
+    assert (
+        example_target.read_text()
+        == '''from pylm import pylm
+
+def function():
+    pass
+
+def other_function(c, d):
+    """
+    Multiple two numbers
+    """
+    return c * d'''
+    )
