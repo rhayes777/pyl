@@ -6,3 +6,10 @@ def function(a, b):
     """
     Add together two numbers
     """
+
+
+def other_function(c, d):
+    """
+    Multiple two numbers
+    """
+    return c * d
