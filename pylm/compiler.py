@@ -1,3 +1,4 @@
+import os
 from abc import ABC
 from dataclasses import dataclass
 from typing import Optional
@@ -25,7 +26,9 @@ class ClaudeConversation(Conversation):
     ):
         super().__init__()
         self.system = system
-        self.client = AnthropicBedrock()
+        self.client = AnthropicBedrock(
+            aws_region=os.environ.get("AWS_DEFAULT_REGION"),
+        )
         self.model = model
         self.max_tokens = max_tokens
 
