@@ -17,9 +17,17 @@ args = argument_parser.parse_args()
 
 source_path = args.source
 
-module = Module(args.source)
 
-compiler = Compiler(module)
+def compile_module(path: Path):
+    module = Module(path)
+    compiler = Compiler(module)
+    with open(path.with_suffix(".py"), "w") as f:
+        f.write(compiler.compiled_module())
 
-with open(source_path.with_suffix(".py"), "w") as f:
-    f.write(compiler.compiled_module())
+
+if source_path.is_dir():
+    for module_path in source_path.rglob("*.pylm"):
+        compile_module(module_path)
+    exit()
+
+compile_module(source_path)
