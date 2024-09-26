@@ -21,6 +21,7 @@ source_path = args.source
 def compile_module(path: Path):
     module = Module(path)
     compiler = Compiler(module)
+    compiler.run()
     with open(path.with_suffix(".py"), "w") as f:
         f.write(compiler.compiled_module())
 

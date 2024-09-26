@@ -6,6 +6,7 @@ from typing import Optional
 from anthropic import AnthropicBedrock
 
 from pylm.module import Module
+from pylm.module_updater import ModuleUpdater
 from pylm.session import Function
 
 
@@ -112,6 +113,16 @@ def function(a, b):
 
     def compiled_module(self):
         return "\n\n".join(f.implementation for f in self.compiled_functions())
+
+    def run(self):
+        target_path = self.module.path.with_suffix(".py")
+        with open(target_path, "w") as f:
+            f.write(self.module.path.read_text())
+
+        updater = ModuleUpdater(target_path)
+
+        for function in self.compiled_functions():
+            updater[function.source.name] = function.implementation
 
 
 def extract_code_from_tags(code: str) -> str:
