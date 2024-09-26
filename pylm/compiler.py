@@ -98,10 +98,10 @@ def add(a, b):
     def compiled_functions(self):
         for function in self.module.functions:
             compiled = self._compile(function)
-            self.conversation.clear()
             yield compiled
 
     def _compile(self, function):
+        self.conversation.clear()
         prompt = f""""
 {function.name}{function.signature}
 {function.docs}
