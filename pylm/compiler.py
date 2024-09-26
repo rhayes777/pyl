@@ -123,7 +123,9 @@ def add(a, b):
         updater = ModuleUpdater(target_path)
 
         for function in self.compiled_functions():
-            updater[function.source.name] = function.implementation
+            updater[function.source.name].update(function.implementation)
+
+        updater.commit()
 
 
 def extract_code_from_tags(code: str) -> str:
