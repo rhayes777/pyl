@@ -1,6 +1,17 @@
+import inspect
+
+
 class Function:
     def __init__(self, function):
         self.function = function
+
+    @property
+    def name(self):
+        return self.function.__name__
+
+    @property
+    def signature(self):
+        return str(inspect.signature(self.function))
 
     @property
     def docs(self):
