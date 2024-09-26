@@ -71,4 +71,12 @@ Return an implemented Python function with the same signature and description.
             yield compiled
 
     def _compile(self, function):
-        prompt = None
+        prompt = f""""
+{function.name}{function.signature}
+{function.docs}
+"""
+        implementation = self.conversation(prompt)
+        return CompiledFunction(
+            source=function,
+            implementation=implementation,
+        )
