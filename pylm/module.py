@@ -2,7 +2,7 @@ from functools import cached_property
 from pathlib import Path
 
 
-class Compiler:
+class Module:
     def __init__(self, path: Path):
         self.path = path
 

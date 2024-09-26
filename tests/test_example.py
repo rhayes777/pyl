@@ -1,9 +1,10 @@
 from pathlib import Path
 
-from pylm.compiler import Compiler
+from pylm.module import Module
 
 
 def test_register_function():
     example_path = Path(__file__).parent / "example.pylm"
-    compiler = Compiler(example_path)
-    assert len(compiler.functions) > 0
+    module = Module(example_path)
+    function = module.functions[0]
+    assert function.docs == '\n    Add together two numbers\n    '
