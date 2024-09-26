@@ -110,6 +110,9 @@ def function(a, b):
             implementation=implementation,
         )
 
+    def compiled_module(self):
+        return "\n\n".join(f.implementation for f in self.compiled_functions())
+
 
 def extract_code_from_tags(code: str) -> str:
     """

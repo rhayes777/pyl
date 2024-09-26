@@ -15,9 +15,11 @@ argument_parser.add_argument(
 
 args = argument_parser.parse_args()
 
+source_path = args.source
+
 module = Module(args.source)
 
 compiler = Compiler(module)
 
-for function in compiler.compiled_functions():
-    print(function.implementation)
+with open(source_path.with_suffix("*.py"), "w") as f:
+    f.write(compiler.compiled_module())
