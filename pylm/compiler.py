@@ -104,8 +104,33 @@ def function(a, b):
 {function.name}{function.signature}
 {function.docs}
 """
-        implementation = self.conversation(prompt)
+        implementation = extract_code_from_tags(self.conversation(prompt))
         return CompiledFunction(
             source=function,
             implementation=implementation,
         )
+
+
+def extract_code_from_tags(code: str) -> str:
+    """
+    Extract the code from between the <python></python> tags.
+
+    Args:
+        code (str): The input string containing the code enclosed in tags.
+
+    Returns:
+        str: The extracted code without the tags.
+    """
+    start_tag = "<python>"
+    end_tag = "</python>"
+
+    start_index = code.find(start_tag)
+    if start_index == -1:
+        return ""
+
+    start_index += len(start_tag)
+    end_index = code.find(end_tag)
+    if end_index == -1:
+        return ""
+
+    return code[start_index:end_index]
