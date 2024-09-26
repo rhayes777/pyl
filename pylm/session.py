@@ -1,9 +1,7 @@
 class Session:
     def __init__(self):
-        pass
+        self.functions = []
 
     def jit(self, function):
-        pass
+        self.functions.append(function)
 
-    def compile(self):
-        pass
