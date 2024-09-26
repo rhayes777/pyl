@@ -66,6 +66,7 @@ class Compiler:
 I will give you a function signature and a description of that function. 
 Return an implemented Python function with the same signature and description.
 Give only the Python code in response.
+Keep the function name and signature the same.
 
 The signature will be defined in signature tags. The response should be given in <python> tags.
 
@@ -78,7 +79,7 @@ def add(a: int, b: int) -> int:
     '''
 </signature>
 <python>
-def function(a, b):
+def add(a, b):
     '''
     Add together two numbers.
 
