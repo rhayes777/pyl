@@ -8,6 +8,13 @@ def function(a, b):
     """
 
 
+@pylm.jit
+def get_status(url: str):
+    """
+    Makes a get request to the URL and returns the status
+    """
+
+
 def other_function(c, d):
     """
     Multiple two numbers
