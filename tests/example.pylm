@@ -6,3 +6,15 @@ def function(a, b):
     """
     Add together two numbers
     """
+
+
+@pylm.jit
+def extract_code_from_tags(code: str) -> str:
+    """
+    Extract the code from between the <python></python> tags
+
+    For example,
+    Preamble <python>print("Hello, World!")</python>
+    would return
+    print("Hello, World!")
+    """

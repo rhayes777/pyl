@@ -64,6 +64,32 @@ class Compiler:
             system="""
 I will give you a function signature and a description of that function. 
 Return an implemented Python function with the same signature and description.
+Give only the Python code in response.
+
+The signature will be defined in signature tags. The response should be given in <python> tags.
+
+For example:
+
+<signature>
+def add(a: int, b: int) -> int:
+    '''
+    Add two integers.
+    '''
+</signature>
+<python>
+def function(a, b):
+    '''
+    Add together two numbers.
+
+    Args:
+        a (int or float): The first number to be added.
+        b (int or float): The second number to be added.
+
+    Returns:
+        int or float: The sum of the two input numbers.
+    '''
+    return a + b
+</python>
             """
         )
 
