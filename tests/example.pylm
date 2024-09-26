@@ -1,0 +1,8 @@
+from pylm import pylm
+
+
+@pylm.jit
+def function(a, b):
+    """
+    Add together two numbers
+    """
