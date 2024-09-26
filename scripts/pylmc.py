@@ -21,5 +21,5 @@ module = Module(args.source)
 
 compiler = Compiler(module)
 
-with open(source_path.with_suffix("*.py"), "w") as f:
+with open(source_path.with_suffix(".py"), "w") as f:
     f.write(compiler.compiled_module())
