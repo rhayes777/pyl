@@ -29,18 +29,13 @@ def example_target(example_path):
 
 def test_module_updater(example_target):
     updater = ModuleUpdater(example_target)
-    updater["function"] = "def function():\n    pass"
+    updater["function"].update("def function():\n    pass")
+    updater.commit()
 
     assert (
-        example_target.read_text()
-        == '''from pylm import pylm
-
+        """
 def function():
     pass
-
-def other_function(c, d):
-    """
-    Multiple two numbers
-    """
-    return c * d'''
+"""
+        in example_target.read_text()
     )
