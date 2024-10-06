@@ -4,11 +4,12 @@ from pathlib import Path
 
 class ModuleUpdater:
     def __init__(self, path: Path):
+        path.touch()
         self.path = path
         self.ast = ast.parse(self.path.read_text())
 
     def add_function(self, code: str):
-        self.ast.body.append(ast.parse(value))
+        self.ast.body.append(ast.parse(code))
 
     def exists(self, name: str):
         for i, item in enumerate(self.ast.body):

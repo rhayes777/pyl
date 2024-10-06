@@ -1,5 +1,4 @@
 import inspect
-from collections import defaultdict
 from pathlib import Path
 from typing import List
 
@@ -8,15 +7,20 @@ class Module:
     def __init__(
         self,
         path: Path,
-        functions: List["Function"],
+        functions: List["Function"] = None,
     ):
         self.path = path
-        self.functions = functions
+        self.functions = functions or []
+
+    @property
+    def target_path(self):
+        return self.path.with_stem(f"{self.path.stem}_pylm.py")
 
 
 class Function:
-    def __init__(self, function):
+    def __init__(self, function, module: Module):
         self.function = function
+        self.module = module
 
     @property
     def name(self):
@@ -30,22 +34,34 @@ class Function:
     def docs(self):
         return self.function.__doc__
 
+    def __call__(self, *args, **kwargs):
+        return self.function(*args, **kwargs)
+
 
 class Session:
     def __init__(self):
-        self.functions = []
+        self.modules_by_path = {}
 
     def jit(self, function):
-        self.functions.append(Function(function))
+        module_path = Path(function.__code__.co_filename)
+
+        if module_path not in self.modules_by_path:
+            self.modules_by_path[module_path] = Module(module_path)
+
+        module = self.modules_by_path[module_path]
+        function_ = Function(function, module)
+        module.functions.append(function_)
+
+        return function_
 
     @property
     def modules(self):
-        functions_by_module = defaultdict(list)
-        for function in self.functions:
-            module_path = Path(function.function.__code__.co_filename)
-            functions_by_module[module_path].append(function)
+        return self.modules_by_path.keys()
 
+    @property
+    def functions(self):
         return [
-            Module(module_path, functions)
-            for module_path, functions in functions_by_module.items()
+            function
+            for functions in self.modules_by_path.values()
+            for function in functions
         ]

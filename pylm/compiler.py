@@ -115,9 +115,7 @@ def add(a, b):
         return "\n\n".join(f.implementation for f in self.compiled_functions())
 
     def run(self):
-        target_path = self.module.path.with_stem(f"{self.module.path.stem}_pylm.py")
-        if not target_path.exists():
-            target_path.touch()
+        target_path = self.module.target_path
 
         updater = ModuleUpdater(target_path)
 
