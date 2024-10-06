@@ -5,9 +5,8 @@ from typing import Optional
 
 from anthropic import AnthropicBedrock
 
-from pylm.module import Module
 from pylm.module_updater import ModuleUpdater
-from pylm.session import Function
+from pylm.session import Function, Module
 
 
 class Conversation(ABC):
@@ -117,13 +116,14 @@ def add(a, b):
 
     def run(self):
         target_path = self.module.path.with_stem(f"{self.module.path.stem}_pylm.py")
-        with open(target_path, "w") as f:
-            f.write(self.module.path.read_text())
+        if not target_path.exists():
+            target_path.touch()
 
         updater = ModuleUpdater(target_path)
 
-        for function in self.compiled_functions():
-            updater[function.source.name].update(function.implementation)
+        for function in self.module.functions:
+            if not updater.exists(function.name):
+                updater.add_function(self._compile(function).implementation)
 
         updater.commit()
 

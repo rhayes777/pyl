@@ -7,28 +7,19 @@ class ModuleUpdater:
         self.path = path
         self.ast = ast.parse(self.path.read_text())
 
-    def __getitem__(self, name: str):
+    def add_function(self, code: str):
+        self.ast.body.append(ast.parse(value))
+
+    def exists(self, name: str):
         for i, item in enumerate(self.ast.body):
             try:
                 if getattr(item, "name") == name:
-                    return Item(self, i)
+                    return True
             except AttributeError:
                 pass
-        raise KeyError(f"No item found with name {name}")
+
+        return False
 
     def commit(self):
         with open(self.path, "w") as f:
             f.write(ast.unparse(self.ast))
-
-
-class Item:
-    def __init__(
-        self,
-        updater: ModuleUpdater,
-        index: int,
-    ):
-        self.updater = updater
-        self.index = index
-
-    def update(self, code: str):
-        self.updater.ast.body[self.index] = ast.parse(code)

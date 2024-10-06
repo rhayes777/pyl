@@ -7,10 +7,10 @@ from typing import List
 class Module:
     def __init__(
         self,
-        module_path: Path,
+        path: Path,
         functions: List["Function"],
     ):
-        self.module_path = module_path
+        self.path = path
         self.functions = functions
 
 
