@@ -17,7 +17,7 @@ class Module:
 
     @property
     def target_path(self):
-        return self.path.with_stem(f"{self.path.stem}_pylm.py")
+        return self.path.with_stem(f"{self.path.stem}_pylm")
 
     @property
     def target_module(self):
