@@ -8,7 +8,7 @@ from pylm.module_updater import ModuleUpdater
 
 @pytest.fixture
 def example_path():
-    return Path(__file__).parents[1] / "pylm/example.pylm"
+    return Path(__file__).parents[1] / "pylm/example.py"
 
 
 def test_register_function(example_path):
@@ -21,7 +21,7 @@ def test_register_function(example_path):
 
 @pytest.fixture
 def example_target(example_path):
-    target = Path(__file__).parent / "example.py"
+    target = Path(__file__).parent / "pylm_example.py"
     shutil.copy(example_path, target)
     yield target
     target.unlink()
