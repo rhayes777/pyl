@@ -3,8 +3,6 @@ import inspect
 from pathlib import Path
 from typing import List
 
-from pylm.compiler import Compiler
-
 
 class Module:
     def __init__(
@@ -51,6 +49,8 @@ class Function:
         try:
             return self._call(*args, **kwargs)
         except (ImportError, AttributeError):
+            from pylm.compiler import Compiler
+
             Compiler(self.module).run()
             return self._call(*args, **kwargs)
 
