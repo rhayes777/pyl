@@ -1,4 +1,17 @@
 import inspect
+from collections import defaultdict
+from pathlib import Path
+from typing import List
+
+
+class Module:
+    def __init__(
+        self,
+        module_path: Path,
+        functions: List["Function"],
+    ):
+        self.module_path = module_path
+        self.functions = functions
 
 
 class Function:
@@ -25,3 +38,14 @@ class Session:
     def jit(self, function):
         self.functions.append(Function(function))
 
+    @property
+    def modules(self):
+        functions_by_module = defaultdict(list)
+        for function in self.functions:
+            module_path = Path(function.function.__code__.co_filename)
+            functions_by_module[module_path].append(function)
+
+        return [
+            Module(module_path, functions)
+            for module_path, functions in functions_by_module.items()
+        ]

@@ -116,7 +116,7 @@ def add(a, b):
         return "\n\n".join(f.implementation for f in self.compiled_functions())
 
     def run(self):
-        target_path = self.module.path.with_suffix(".py")
+        target_path = self.module.path.with_stem(f"{self.module.path.stem}_pylm.py")
         with open(target_path, "w") as f:
             f.write(self.module.path.read_text())
 
